@@ -1,29 +1,32 @@
 <script setup lang="ts">
+import { ref } from "vue"
+import type { Ref } from "vue"
+
+// Events we send
+defineEmits<{
+    (e: 'selected', entry: { index: number, instrument: string}): void;
+}>();
+
+// Required properties
+const props = defineProps<{
+    instrument: string;
+    notes: Array<String | null>;
+}>();
+
 </script>
 
 <template>
   <div class="box level has-background-light">
     <div class="level-item level-left">
-      <p>Instrument</p>
+      <p>{{ instrument }}</p>
     </div>
+    
     <div class="buttons are-small level-item m-0">
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
-      <a href="#" class="button track-item"></a>
+      <a v-for="(note, index) in notes"  href="#" class="button track-item" :key="index"
+      @click="$emit('selected', {index, instrument})">{{ note }}</a>
     </div>
+
+    <!-- TODO: Track actions-->
     <div class="level-item level-right buttons">
       <button class="button" title="Single">
         <span class="icon is-small">

@@ -1,5 +1,24 @@
 <script setup lang="ts">
-    import Tracker from './components/Tracker.vue';
+    import { ref } from 'vue';
+    import type { Ref } from 'vue';
+    import Tracker from '@/components/Tracker.vue';
+
+    const handleSelectedNote = (index: number) => {
+        console.log(index)
+    }
+
+    interface Instrument {
+        id: number,
+        name: String;
+        notes: Array<string | null>;
+    }
+
+    const instruments: Ref<Array<Instrument>> = ref([
+        {id: 1, name: "Sample 1", notes: Array(16)},
+        {id: 2, name: "Sample 2", notes: Array(16)},
+        {id: 3, name: "Sample 3", notes: Array(16)},
+    ]);
+
 </script>
 
 <template>
@@ -46,91 +65,9 @@
         </div>
 
         <!-- Start instrument track -->
-        <Tracker />
-
-        <div class="box level has-background-light">
-            <div class="level-item level-left">
-                <p>Instrument</p>
-            </div>
-            <div class="buttons are-small level-item m-0">
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-            </div>
-            <div class="level-item level-right buttons">
-                <button class="button" title="Single">
-                    <span class="icon is-small">
-                        <i class="fa-solid fa-ear-listen"></i>
-                    </span>
-                </button>
-                
-                <button class="button" title="Mute">
-                    <span class="icon is-small">
-                        <i class="fa-solid fa-volume-xmark"></i>
-                    </span>
-                </button>
-                <button class="button" title="Remove instrument">
-                    <span class="icon is-small">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </span>
-                </button>
-            </div>
-        </div>
-
-        <div class="box level has-background-light">
-            <div class="level-item level-left">
-                <p>Instrument</p>
-            </div>
-            <div class="buttons are-small level-item m-0">
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-                <a href="#" class="button track-item"></a>
-            </div>
-            <div class="level-item level-right buttons">
-                <button class="button" title="Single">
-                    <span class="icon is-small">
-                        <i class="fa-solid fa-ear-listen"></i>
-                    </span>
-                </button>
-                
-                <button class="button" title="Mute">
-                    <span class="icon is-small">
-                        <i class="fa-solid fa-volume-xmark"></i>
-                    </span>
-                </button>
-                <button class="button" title="Remove instrument">
-                    <span class="icon is-small">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </span>
-                </button>
-            </div>
-        </div>
+        <Tracker v-for="instrument in instruments" :key="instrument.id"
+            @selected="handleSelectedNote" :instrument="instrument.name"
+            :notes="instrument.notes" />
 
         <!-- Add new instrument -->
 
