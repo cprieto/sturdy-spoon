@@ -1,9 +1,12 @@
 <script setup lang="ts">
     import { ref } from 'vue';
     import type { Ref } from 'vue';
-    import Tracker from '@/components/Tracker.vue';
+    import Track from '@/components/Track.vue';
     import Piano from '@/components/Piano.vue';
     import AddInstrument from '@/components/AddInstrument.vue';
+    import { useTrackerStore } from './stores/Tracker';
+
+    const store = useTrackerStore();
 
     const handleSelectedNote = (index: number) => {
         console.log(index);
@@ -14,7 +17,7 @@
     }
 
     const handleAdded = (instrument: {id: string; name: string}) => {
-        console.log(`added instrument ${instrument.id}`)
+        store.addInstrument(instrument);
     }
 
     interface Instrument {
@@ -22,12 +25,6 @@
         name: String;
         notes: Array<string | null>;
     }
-
-    const instruments: Ref<Array<Instrument>> = ref([
-        {id: 1, name: "Sample 1", notes: Array(16)},
-        {id: 2, name: "Sample 2", notes: Array(16)},
-        {id: 3, name: "Sample 3", notes: Array(16)},
-    ]);
 
 </script>
 
@@ -75,7 +72,7 @@
         </div>
 
         <!-- Start instrument track -->
-        <Tracker v-for="instrument in instruments" :key="instrument.id"
+        <Track v-for="instrument in store.tracks" :key="instrument.id"
             @selected="handleSelectedNote" :instrument="instrument.name"
             :notes="instrument.notes" />
 
