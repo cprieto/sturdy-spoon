@@ -3,6 +3,7 @@
     import type { Ref } from 'vue';
     import Tracker from '@/components/Tracker.vue';
     import Piano from '@/components/Piano.vue';
+    import AddInstrument from '@/components/AddInstrument.vue';
 
     const handleSelectedNote = (index: number) => {
         console.log(index);
@@ -10,6 +11,10 @@
 
     const handlePianoKey = (note: number) => {
         console.log(`Piano key: ${note}`);
+    }
+
+    const handleAdded = (instrument: {id: string; name: string}) => {
+        console.log(`added instrument ${instrument.id}`)
     }
 
     interface Instrument {
@@ -75,21 +80,7 @@
             :notes="instrument.notes" />
 
         <!-- Add new instrument -->
-
-        <div class="level m-2">
-            <div class="field is-grouped level-item level-left">
-                <p class="control select">
-                    <select>
-                        <option>Add new instrument</option>
-                    </select>
-                </p>
-                <p class="control">
-                    <a href="#" class="button is-info">
-                        Add
-                    </a>
-                </p>
-            </div>
-        </div>
+        <AddInstrument @added="handleAdded" />
 
     </div>
 
