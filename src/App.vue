@@ -2,9 +2,14 @@
     import { ref } from 'vue';
     import type { Ref } from 'vue';
     import Tracker from '@/components/Tracker.vue';
+    import Piano from '@/components/Piano.vue';
 
     const handleSelectedNote = (index: number) => {
-        console.log(index)
+        console.log(index);
+    }
+
+    const handlePianoKey = (note: number) => {
+        console.log(`Piano key: ${note}`);
     }
 
     interface Instrument {
@@ -88,50 +93,8 @@
 
     </div>
 
-    <!-- Piano goes here -->
-    <div class="block board is-justify-content-center">
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-        <input class="key black" type="button"/>
-        <input class="key white" type="button"/>
-    </div>
+    <!-- Piano keys -->
+    <Piano @pressed="handlePianoKey" />
 
     <!-- Chat area -->
     <div>
