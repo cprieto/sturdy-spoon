@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import { readonly } from 'vue';
+import * as _ from 'lodash';
+import { useTrackerStore, Track } from './Tracker';
 
 export interface Instrument {
     id: string;
@@ -22,7 +24,8 @@ export const useInstrumentStore = defineStore('instruments', {
     },
     getters: {
         available: (state) => {
-            return state.all
+            const tracker = useTrackerStore();
+            return _.differenceWith(state.all, tracker.tracks, (a: Instrument, b: Track) => a.id == b.id)
         },
         instrumentById: (state) => {
             return (id: string) => state.all.find(inst => inst.id == id)!;

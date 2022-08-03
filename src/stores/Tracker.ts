@@ -15,7 +15,11 @@ export const useTrackerStore = defineStore('tracker', {
     },
     actions: {
         addInstrument(instrument: Instrument) {
-            this.tracks.push({...instrument, notes: Array(16)})
+            this.tracks.push({...instrument, notes: Array(16)});
+        },
+        removeInstrument(id: string) {
+            const idx = this.tracks.findIndex(e => e.id == id);
+            this.tracks.splice(idx, 1);
         }
     }
 });

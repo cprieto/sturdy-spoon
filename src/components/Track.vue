@@ -4,12 +4,14 @@ import type { Ref } from "vue"
 
 // Events we send
 defineEmits<{
-    (e: 'selected', entry: { index: number, instrument: string}): void;
+    (e: 'selected', entry: { index: number, id: string}): void;
+    (e: 'removed', entry: string): void;
 }>();
 
 // Required properties
 const props = defineProps<{
-    instrument: string;
+    id: string;
+    name: string;
     notes: Array<String | null>;
 }>();
 
@@ -18,12 +20,12 @@ const props = defineProps<{
 <template>
   <div class="box level has-background-light">
     <div class="level-item level-left">
-      <p>{{ instrument }}</p>
+      <p>{{ name }}</p>
     </div>
     
     <div class="buttons are-small level-item m-0">
       <a v-for="(note, index) in notes"  href="#" class="button track-item" :key="index"
-      @click="$emit('selected', {index, instrument})">{{ note }}</a>
+      @click="$emit('selected', {index, id})">{{ note }}</a>
     </div>
 
     <!-- TODO: Track actions-->
@@ -39,7 +41,7 @@ const props = defineProps<{
           <i class="fa-solid fa-volume-xmark"></i>
         </span>
       </button>
-      <button class="button" title="Remove instrument">
+      <button class="button" title="Remove instrument" @click="$emit('removed', id)">
         <span class="icon is-small">
           <i class="fa-solid fa-trash-can"></i>
         </span>

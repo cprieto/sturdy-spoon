@@ -20,12 +20,6 @@
         store.addInstrument(instrument);
     }
 
-    interface Instrument {
-        id: number,
-        name: String;
-        notes: Array<string | null>;
-    }
-
 </script>
 
 <template>
@@ -73,8 +67,9 @@
 
         <!-- Start instrument track -->
         <Track v-for="instrument in store.tracks" :key="instrument.id"
-            @selected="handleSelectedNote" :instrument="instrument.name"
-            :notes="instrument.notes" />
+            @selected="handleSelectedNote" :id="instrument.id" 
+            :name="instrument.name" :notes="instrument.notes" 
+            @removed="store.removeInstrument" />
 
         <!-- Add new instrument -->
         <AddInstrument @added="handleAdded" />
