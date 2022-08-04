@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useInstrumentStore } from '../stores/Instruments';
+import { useInstrumentStore } from '@/stores/Instruments';
 import type { Ref } from "vue";
 
 const store = useInstrumentStore();
@@ -15,8 +15,7 @@ const handleAdd = () => {
     let instrument = store.instrumentById(selection.value!);
     emit('added', instrument);
     selection.value = 'none';
-}
-
+};
 </script>
 
 <template>

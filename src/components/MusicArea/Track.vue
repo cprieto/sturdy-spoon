@@ -4,7 +4,7 @@ import type { Ref } from "vue"
 
 // Events we send
 defineEmits<{
-    (e: 'selected', entry: { index: number, id: string}): void;
+    (e: 'selected', entry: {note: number, id: string}): void;
     (e: 'removed', entry: string): void;
 }>();
 
@@ -24,8 +24,8 @@ const props = defineProps<{
     </div>
     
     <div class="buttons are-small level-item m-0">
-      <a v-for="(note, index) in notes"  href="#" class="button track-item" :key="index"
-      @click="$emit('selected', {index, id})">{{ note }}</a>
+      <a v-for="(note, index) in notes"  href="#" class="button track-item is-size-7" :key="index"
+      @click="$emit('selected', {note: index, id})">{{ note }}</a>
     </div>
 
     <!-- TODO: Track actions-->
