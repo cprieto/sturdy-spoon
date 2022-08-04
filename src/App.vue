@@ -19,8 +19,10 @@
   <section class="section">
     <h1 class="title">Collaborative P2P music tracker</h1>
 
+    <!-- Connection area -->
     <Connection />
 
+    <!-- Music generation area -->
     <MusicArea />
 
     <!-- Piano keys -->
@@ -28,6 +30,5 @@
 
     <!-- Chat area -->
     <Chat />
-
   </section>
 </template>
