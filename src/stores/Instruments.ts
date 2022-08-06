@@ -1,12 +1,8 @@
 import { defineStore } from 'pinia';
 import { readonly } from 'vue';
 import * as _ from 'lodash';
-import { useTrackerStore, Track } from './Tracker';
-
-export interface Instrument {
-    id: string;
-    name: string;
-}
+import { Instrument, Track } from '@/types';
+import { useTrackerStore } from './Tracker';
 
 export const Instruments: Array<Instrument> = [
     ['piano', 'Piano'], ['bass-electric', 'Electric bass'],

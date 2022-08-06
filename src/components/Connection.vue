@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { useSessionStore } from '@/stores/Session.js';
+import { useSessionStore } from '@/stores/Session';
+import { connect } from '@/crdt';
+
 
 const store = useSessionStore();
-
+connect(store.sessionId);
 </script>
 
 <template>

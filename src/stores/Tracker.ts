@@ -1,18 +1,18 @@
 import { defineStore } from 'pinia';
 import * as _ from 'lodash';
-import { Instrument, useInstrumentStore } from './Instruments';
+import { useInstrumentStore } from './Instruments';
+import { Instrument } from '@/types';
+import { store } from '@/crdt';
+import type { Composition }  from '@/types';
 
-export interface Track {
-    id: string;
-    name: string;
-    notes: Array<string | null>;
-}
+
+type Selected = {id: string; note: number};
 
 export const useTrackerStore = defineStore('tracker', {
     state: () => {
         return {
-            tracks: [] as Track[],
-            selected: null as {id: string; note: number} | null,
+            tracks: store.composition as Composition,
+            selected: null as Selected | null,
         }
     },
     actions: {
@@ -35,8 +35,6 @@ export const useTrackerStore = defineStore('tracker', {
             if (!track) return;
 
             track.notes[this.selected.note] = note;
-
-            console.log(this.tracks);
         },
         random(num: number = 3) {
             const store = useInstrumentStore();
@@ -46,6 +44,6 @@ export const useTrackerStore = defineStore('tracker', {
             });
             
             this.tracks = instruments;
-        }
+        },
     }
 });
