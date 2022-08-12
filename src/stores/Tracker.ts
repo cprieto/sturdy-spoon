@@ -11,7 +11,7 @@ type Selected = {id: string; note: number};
 export const useTrackerStore = defineStore('tracker', {
     state: () => {
         return {
-            tracks: store.composition as Composition,
+            tracks: [] as Composition,
             selected: null as Selected | null,
         }
     },

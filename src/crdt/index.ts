@@ -1,23 +1,21 @@
 import { syncedStore, getYjsValue } from "@syncedstore/core";
 import { WebrtcProvider } from "y-webrtc";
 
-import type { Composition } from '@/types';
+import { Instrument, Track } from '@/types';
 
-export const store = syncedStore({ composition: [] as Composition});
+export const store = syncedStore({ 
+    composition: [] as Track[], 
+    messages: [] as string[] 
+});
 
 const doc = getYjsValue(store);
-let webrtcProvider: WebrtcProvider | null = null;
+let webrtcProvider = new WebrtcProvider('test-connection', doc as any);
 
 
 export const disconnect = () => {
-    if (webrtcProvider) webrtcProvider.disconnect();
+    webrtcProvider.disconnect();
 }
-
 
 export const connect = (sessionId: string) => {
-    if (webrtcProvider) webrtcProvider.destroy();
-
-    webrtcProvider = new WebrtcProvider(sessionId, doc as any);
     webrtcProvider.connect();
 }
-

@@ -1,14 +1,42 @@
+<script setup lang="ts">
+import * as _ from "lodash";
+import { ref } from "vue";
+import { store } from '@/crdt';
+
+const message = ref("");
+
+const addMessage = () => {
+  let notes: Array<string | null> = Array(16);
+  _.fill(notes, 'A');
+
+  let track = {id: 'foo', name: 'bar', notes};
+  store.composition.push(track);
+}
+
+const changeMessage = () => {
+  let track = _.sample(store.composition);
+  if (!track) return;
+
+  const idx = 10;
+  let note = track.notes[idx];
+  console.log(note);
+}
+
+</script>
 <template>
   <div>
     <div class="field is-grouped block">
       <p class="control is-expanded">
-        <input type="text" class="input" placeholder="Message" />
+        <input type="text" class="input" placeholder="Message" v-model="message" />
       </p>
       <p class="control">
-        <a href="#" class="button is-info"> Send </a>
+        <a href="#" class="button is-info" @click="addMessage"> Add </a>
+        <a href="#" class="button is-info" @click="changeMessage"> Change </a>
       </p>
     </div>
 
-    <textarea class="textarea" rows="10" readonly></textarea>
+    <textarea class="textarea" rows="10" readonly>
+      {{store.composition}}
+    </textarea>
   </div>
 </template>
