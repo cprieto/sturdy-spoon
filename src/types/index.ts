@@ -3,8 +3,12 @@ export interface Instrument {
     name: string;
 }
 
+export interface Note {
+    value: string | null
+}
+
 export interface Track extends Instrument {
-    notes: Array<string | null>;
+    notes: Array<Note | undefined>;
 }
 
 export type Composition = Track[];

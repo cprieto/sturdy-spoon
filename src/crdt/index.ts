@@ -4,8 +4,8 @@ import { WebrtcProvider } from "y-webrtc";
 import { Instrument, Track } from '@/types';
 
 export const store = syncedStore({ 
-    composition: [] as Track[], 
-    messages: [] as string[] 
+    composition: [] as Track[],
+    messages: [] as string[]
 });
 
 const doc = getYjsValue(store);

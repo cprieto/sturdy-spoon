@@ -34,7 +34,7 @@ export const useTrackerStore = defineStore('tracker', {
             let track = this.tracks.find(t => t.id === this.selected!.id);
             if (!track) return;
 
-            track.notes[this.selected.note] = note;
+            track.notes[this.selected.note] = {value: note};
         },
         random(num: number = 3) {
             const store = useInstrumentStore();

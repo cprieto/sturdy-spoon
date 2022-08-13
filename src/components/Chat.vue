@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import * as _ from "lodash";
 import { ref } from "vue";
+import { Note } from '@/types';
 import { store } from '@/crdt';
 
 const message = ref("");
 
 const addMessage = () => {
-  let notes: Array<string | null> = Array(16);
-  _.fill(notes, 'A');
+  let notes: Array<{value: string}> = Array(16);
+  _.fill(notes, {value: 'A'});
 
   let track = {id: 'foo', name: 'bar', notes};
   store.composition.push(track);
@@ -19,7 +20,7 @@ const changeMessage = () => {
 
   const idx = 10;
   let note = track.notes[idx];
-  console.log(note);
+  console.log(note!.value = 'B');
 }
 
 </script>

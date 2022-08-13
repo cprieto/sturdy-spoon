@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import type { Ref } from "vue"
+import { Note } from "@/types";
 
 // Events we send
 defineEmits<{
@@ -12,7 +13,7 @@ defineEmits<{
 const props = defineProps<{
     id: string;
     name: string;
-    notes: Array<String | null>;
+    notes: Array<Note | undefined>;
 }>();
 
 </script>
@@ -25,7 +26,7 @@ const props = defineProps<{
     
     <div class="buttons are-small level-item m-0">
       <a v-for="(note, index) in notes"  href="#" class="button track-item is-size-7" :key="index"
-      @click="$emit('selected', {note: index, id})">{{ note }}</a>
+      @click="$emit('selected', {note: index, id})">{{ note?.value }}</a>
     </div>
 
     <!-- TODO: Track actions-->
