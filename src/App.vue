@@ -11,7 +11,7 @@ import { useTrackerStore } from '@/stores/Tracker';
 import { useSessionStore } from './stores/Session';
 
 const trackerStore = useTrackerStore();
-trackerStore.random();
+//trackerStore.random();
 
 const handlePianoKey = (key: string) => trackerStore.setNote(key);
 </script>

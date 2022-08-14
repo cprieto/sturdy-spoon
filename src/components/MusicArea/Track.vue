@@ -5,7 +5,7 @@ import { Note } from "@/types";
 
 // Events we send
 defineEmits<{
-    (e: 'selected', entry: {note: number, id: string}): void;
+    (e: 'selected', entry: {position: number, id: string}): void;
     (e: 'removed', entry: string): void;
 }>();
 
@@ -26,7 +26,7 @@ const props = defineProps<{
     
     <div class="buttons are-small level-item m-0">
       <a v-for="(note, index) in notes"  href="#" class="button track-item is-size-7" :key="index"
-      @click="$emit('selected', {note: index, id})">{{ note?.value }}</a>
+      @click="$emit('selected', {position: index, id})">{{ note?.value }}</a>
     </div>
 
     <!-- TODO: Track actions-->

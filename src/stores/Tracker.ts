@@ -6,18 +6,20 @@ import { store } from '@/crdt';
 import type { Composition }  from '@/types';
 
 
-type Selected = {id: string; note: number};
+type Selected = {id: string; position: number};
 
 export const useTrackerStore = defineStore('tracker', {
     state: () => {
         return {
-            tracks: [] as Composition,
+            tracks: store.composition as Composition,
             selected: null as Selected | null,
         }
     },
     actions: {
         addInstrument(instrument: Instrument) {
-            this.tracks.push({...instrument, notes: Array(16)});
+            let notes = Array(16);
+            _.fill(notes, {value: ''});
+            this.tracks.push({...instrument, notes});
         },
         removeInstrument(id: string) {
             if (this.selected?.id == id) this.selected == null;
@@ -25,7 +27,7 @@ export const useTrackerStore = defineStore('tracker', {
             const idx = this.tracks.findIndex(e => e.id == id);
             this.tracks.splice(idx, 1);
         },
-        select(entry: {id: string, note: number}) {
+        select(entry: {id: string, position: number}) {
             this.selected = entry;
         },
         setNote(note: string) {
@@ -33,8 +35,10 @@ export const useTrackerStore = defineStore('tracker', {
 
             let track = this.tracks.find(t => t.id === this.selected!.id);
             if (!track) return;
-
-            track.notes[this.selected.note] = {value: note};
+            
+            let entry = track.notes[this.selected.position];
+            if (!entry) return;
+            entry.value = note;
         },
         random(num: number = 3) {
             const store = useInstrumentStore();

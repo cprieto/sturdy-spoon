@@ -10,7 +10,7 @@ const handleAdded = (instrument: { id: string; name: string }) => {
   store.addInstrument(instrument);
 };
 
-const handleSelectedNote = (entry: {note: number, id: string}) => {
+const handleSelectedNote = (entry: {position: number, id: string}) => {
     store.select(entry);
 }
 </script>
