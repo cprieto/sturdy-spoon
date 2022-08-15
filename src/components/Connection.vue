@@ -1,27 +1,38 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { useSessionStore } from '@/stores/Session';
 import { connect } from '@/crdt';
 
+const route = useRoute();
+const router = useRouter();
 const store = useSessionStore();
-connect(store.sessionId);
+
+const sessionUrl = computed(() => new URL(router.resolve({ name: 'Home', params: { sessionId: store.sessionId } }).href, window.location.origin).href)
+
+watch(
+  () => route.params.sessionId,
+  async newId => {
+    console.log(`new session id: ${newId === ''}`);
+  }
+)
+
+onMounted(() => connect(store.sessionId));
 
 const showModal = ref(false);
 
 const handleCopy = async () => {
   const { toClipboard } = useClipboard();
-   try {
-    await toClipboard('hola mundo');
-   } catch {
+  try {
+    await toClipboard(sessionUrl.value);
+  } catch {
     console.error('oops!');
-   }
+  }
 }
-
 </script>
 
 <template>
-
   <div class="modal" :class="{ 'is-active': showModal }">
     <div class="modal-background"></div>
     <div class="modal-card">
@@ -32,7 +43,7 @@ const handleCopy = async () => {
       <section class="modal-card-body">
         <div class="field">
           <p class="control has-icons-right">
-            <input type="text" class="input" readonly="true" value="hello wife I love you!" @click="handleCopy">
+            <input type="text" class="input" readonly="true" :value="sessionUrl" @click="handleCopy">
             <span class="icon is-small is-right">
               <i class="fas fa-copy"></i>
             </span>

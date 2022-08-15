@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia';
+import { useRoute } from 'vue-router';
 import generate from 'project-name-generator';
 import { nanoid } from 'nanoid'
 
+const route = useRoute();
 
 export const useSessionStore = defineStore('session', {
     state: () => {
-        return { sessionId: nanoid(), nickname: generate().dashed }
+        return { sessionId: route.params.sessionId || nanoid(), nickname: generate().dashed }
     },
 });
