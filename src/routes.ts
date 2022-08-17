@@ -1,12 +1,14 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import Home from '@/views/Home.vue';
+import { nanoid } from 'nanoid';
 
 const routes = [
-    {path: '/:sessionId?', name: 'Home', component: Home, sensitive: true},
+    {path: '/', name: 'Home', component: Home, strict: true, props: {sessionId: nanoid()}},
+    {path: '/j/:sessionId', name: 'Join', component: Home, props: true},
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 });
 

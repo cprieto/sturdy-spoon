@@ -7,6 +7,6 @@ const route = useRoute();
 
 export const useSessionStore = defineStore('session', {
     state: () => {
-        return { sessionId: route.params.sessionId || nanoid(), nickname: generate().dashed }
+        return { sessionId: '', nickname: generate().dashed }
     },
 });

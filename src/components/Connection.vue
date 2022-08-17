@@ -1,26 +1,19 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { useSessionStore } from '@/stores/Session';
-import { connect } from '@/crdt';
 
-const route = useRoute();
 const router = useRouter();
 const store = useSessionStore();
-
-const sessionUrl = computed(() => new URL(router.resolve({ name: 'Home', params: { sessionId: store.sessionId } }).href, window.location.origin).href)
-
-watch(
-  () => route.params.sessionId,
-  async newId => {
-    console.log(`new session id: ${newId === ''}`);
-  }
-)
-
-onMounted(() => connect(store.sessionId));
-
 const showModal = ref(false);
+
+const sessionUrl = computed(() => {   
+    const routeUrl = router.resolve({name: 'Join', params: {sessionId: store.sessionId}}).href;
+    const baseUrl = window.location.origin;
+
+    return new URL(routeUrl, baseUrl).href;
+});
 
 const handleCopy = async () => {
   const { toClipboard } = useClipboard();
@@ -72,3 +65,4 @@ const handleCopy = async () => {
     </div>
   </div>
 </template>
+
