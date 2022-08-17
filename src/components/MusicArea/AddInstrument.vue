@@ -28,7 +28,7 @@ const handleAdd = () => {
         </select>
       </p>
       <p class="control">
-        <a href="#" class="button is-info" @click="handleAdd">Add</a>
+        <button class="button is-info" @click="handleAdd" :disabled="selection === 'none'">Add</button>
       </p>
     </div>
   </div>
