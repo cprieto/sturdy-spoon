@@ -38,16 +38,8 @@ export const useTrackerStore = defineStore('tracker', {
             
             let entry = track.notes[this.selected.position];
             if (!entry) return;
-            entry.value = note;
-        },
-        random(num: number = 3) {
-            const store = useInstrumentStore();
-            let instruments = _.sampleSize(store.all, 3).map(({id, name}) => {
-                let notes = Array(16);
-                return {id, name, notes};
-            });
             
-            this.tracks = instruments;
-        },
+            entry.value = note;
+        }
     }
 });
