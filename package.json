@@ -11,8 +11,12 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "start": "node server.js",
-    "postinstall": "if test \"$NODE_ENV\" = \"production\" ; then npm run build ; fi"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "connect-history-api-fallback": "^2.0.0",
+    "express": "^4.18.1",
+    "serve-static": "^1.15.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.1.2",
@@ -21,14 +25,11 @@
     "@types/project-name-generator": "^2.1.1",
     "@vitejs/plugin-vue": "^3.0.0",
     "bulma": "^0.9.4",
-    "connect-history-api-fallback": "^2.0.0",
-    "express": "^4.18.1",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "pinia": "^2.0.17",
     "project-name-generator": "^2.1.9",
     "sass": "^1.54.0",
-    "serve-static": "^1.15.0",
     "tone": "^14.7.77",
     "typescript": "^4.6.4",
     "vite": "^3.0.0",

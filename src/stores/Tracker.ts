@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import * as _ from 'lodash';
-import { useInstrumentStore } from './Instruments';
 import { Instrument } from '@/types';
 import { store } from '@/crdt';
 import type { Composition }  from '@/types';
@@ -22,9 +21,9 @@ export const useTrackerStore = defineStore('tracker', {
             this.tracks.push({...instrument, notes});
         },
         removeInstrument(id: string) {
-            if (this.selected?.id == id) this.selected == null;
+            if (this.selected?.id === id) this.selected = null;
 
-            const idx = this.tracks.findIndex(e => e.id == id);
+            const idx = this.tracks.findIndex(e => e.id === id);
             this.tracks.splice(idx, 1);
         },
         select(entry: {id: string, position: number}) {
