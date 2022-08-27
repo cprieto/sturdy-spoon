@@ -40,5 +40,8 @@ export const useTrackerStore = defineStore('tracker', {
             
             entry.value = note;
         }
+    },
+    getters: {
+        empty: (state) => state.tracks.length == 0
     }
 });

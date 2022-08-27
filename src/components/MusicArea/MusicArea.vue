@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Track from './Track.vue';
 import AddInstrument from './AddInstrument.vue';
+import PlayControls from './PlayControls.vue';
 
 import { useTrackerStore } from "@/stores/Tracker";
 
@@ -18,21 +19,7 @@ const handleSelectedNote = (entry: {position: number, id: string}) => {
 <template>
   <div class="block box">
     <!-- Play buttons -->
-    <div class="level">
-      <div class="buttons level-item level-left">
-        <button class="button" title="Start playing">
-          <span class="icon is-small">
-            <i class="fa-solid fa-play"></i>
-          </span>
-        </button>
-
-        <button class="button" title="Stop playing">
-          <span class="icon is-small">
-            <i class="fa-solid fa-stop"></i>
-          </span>
-        </button>
-      </div>
-    </div>
+    <PlayControls />
 
     <!-- Start instrument track -->
     <Track

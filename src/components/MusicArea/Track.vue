@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import type { Ref } from "vue"
 import { Note } from "@/types";
 
 // Events we send

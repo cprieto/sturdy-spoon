@@ -9,7 +9,6 @@ const handleClick = (id: number) => {
   const freq = Frequency(id, "midi");
   emit('pressed', freq.toNote());
 }
-
 </script>
 
 <template>
