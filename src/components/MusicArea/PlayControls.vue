@@ -1,26 +1,28 @@
 <script setup lang="ts">
-import { ref, getCurrentInstance } from "vue";
+import {getCurrentInstance, provide, ref} from "vue";
 import { useTrackerStore } from "@/stores/Tracker";
-import { Instruments } from "@/stores/Instruments";
-import { AudioPlayer } from '@/player';
+import {AudioPlayer} from "@/player";
+import {Instruments} from "@/stores/Instruments";
 
 const store = useTrackerStore();
 const playing = ref(false);
-const internalInstance = getCurrentInstance();
 
 // Loading all sound samples take some time
+const internalInstance = getCurrentInstance();
 internalInstance?.appContext.config.globalProperties.$Progress.start();
 const player = new AudioPlayer(Instruments.map(x => x.id), 'samples/');
-await player.loaded();
+//await player.loaded();
 internalInstance?.appContext.config.globalProperties.$Progress.finish();
 
 const handlePlay = () => {
     playing.value = true;
+    player.playComposition(store.tracks);
 }
 
 const handleStop = () => {
     playing.value = false;
 }
+
 </script>
 <template>
     <div class="level">

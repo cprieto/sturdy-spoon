@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { Instrument } from '@/types';
 import { store } from '@/crdt';
 import type { Composition }  from '@/types';
+import {Time} from "tone";
 
 
 type Selected = {id: string; position: number};
@@ -18,6 +19,7 @@ export const useTrackerStore = defineStore('tracker', {
         addInstrument(instrument: Instrument) {
             let notes = Array(16);
             _.fill(notes, {value: ''});
+            notes = notes.map((note, idx) => { return {...note, time: Time(idx*0.75).toBarsBeatsSixteenths() } });
             this.tracks.push({...instrument, notes});
         },
         removeInstrument(id: string) {

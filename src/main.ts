@@ -2,6 +2,7 @@ import * as Vue from 'vue';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { enableVueBindings } from "@syncedstore/core";
+// @ts-ignore
 import VueProgressBar from "@/components/vue3-progressbar";
 import router from '@/routes';
 import '@/index.scss';

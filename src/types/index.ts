@@ -5,6 +5,7 @@ export interface Instrument {
 
 export interface Note {
     value: string | null
+    time: string
 }
 
 export interface Track extends Instrument {

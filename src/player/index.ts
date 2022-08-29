@@ -1,5 +1,5 @@
 import { Track } from '@/types';
-import { Sampler, loaded } from 'tone';
+import {Sampler, loaded, Part, Transport, Time} from 'tone';
 import urlJoin from 'url-join';
 
 interface Samplefile {
@@ -554,5 +554,19 @@ export class AudioPlayer {
 
     loaded(): Promise<void> {
         return loaded();
+    }
+
+    playKey(instrument: string, note: string) {
+        this.instruments.get(instrument)?.triggerAttackRelease(note, "2n");
+    }
+
+    playComposition(composition: Track[]) {
+        const parts = composition.map(track =>
+            new Part((time, note) => {
+                this.instruments.get(track.id)?.triggerAttackRelease(note.value!, "2n", time);
+            }, track.notes.filter(n => n?.value !== '')).start(0)
+        );
+
+        Transport.start();
     }
 }
