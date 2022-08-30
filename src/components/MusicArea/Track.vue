@@ -25,7 +25,7 @@ const props = defineProps<{
 
     <div class="buttons are-small column m-0">
       <a v-for="(note, index) in notes" href="#" class="button track-item is-size-7"
-         :class="{'is-active': note.time === playing}" :key="index"
+         :class="{'is-active': note?.time === playing}" :key="index"
          @click="$emit('selected', {position: index, id})">{{ note?.value }}</a>
     </div>
 

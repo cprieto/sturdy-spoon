@@ -21,9 +21,10 @@ const sessionStore = useSessionStore();
 watchEffect(() => sessionStore.connect(props.sessionId));
 
 // Loading all sound samples take some time
+const baseUrl = window.location.protocol + '//' + window.location.host + '/samples/';
 const internalInstance = getCurrentInstance();
 internalInstance?.appContext.config.globalProperties.$Progress.start();
-const player = new AudioPlayer(Instruments.map(x => x.id), 'samples/');
+const player = new AudioPlayer(Instruments.map(x => x.id), baseUrl);
 provide('player', player);
 player.loaded().then(() => {
   internalInstance?.appContext.config.globalProperties.$Progress.finish();
@@ -34,7 +35,7 @@ const handlePianoKey = async (note: string) => {
   await Tone.start();
 
   trackerStore.setNote(note);
-
+  player.playKey(trackerStore.selected.id, note);
 }
 </script>
 
