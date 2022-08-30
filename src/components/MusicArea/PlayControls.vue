@@ -1,43 +1,48 @@
 <script setup lang="ts">
-import {getCurrentInstance, provide, ref} from "vue";
-import { useTrackerStore } from "@/stores/Tracker";
+import {inject, ref} from "vue";
+import {useTrackerStore} from "@/stores/Tracker";
 import {AudioPlayer} from "@/player";
-import {Instruments} from "@/stores/Instruments";
+import * as Tone from "tone";
 
 const store = useTrackerStore();
 const playing = ref(false);
+const player: AudioPlayer = inject('player')!;
 
-// Loading all sound samples take some time
-const internalInstance = getCurrentInstance();
-internalInstance?.appContext.config.globalProperties.$Progress.start();
-const player = new AudioPlayer(Instruments.map(x => x.id), 'samples/');
-//await player.loaded();
-internalInstance?.appContext.config.globalProperties.$Progress.finish();
+player.onFinish = () => {
+  playing.value = false;
+  store.playing = null;
+}
+player.onNote = (note: string) => {
+  store.playing = note;
+};
 
-const handlePlay = () => {
-    playing.value = true;
-    player.playComposition(store.tracks);
+const handlePlay = async () => {
+  await Tone.start();
+  playing.value = true;
+  player?.playComposition(store.tracks);
 }
 
 const handleStop = () => {
-    playing.value = false;
+  playing.value = false;
+  player?.stopComposition();
+  store.playing = null;
 }
 
 </script>
 <template>
-    <div class="level">
-        <div class="buttons level-item level-left">
-            <button class="button" title="Start playing" :disabled="playing || store.empty" @click="handlePlay">
+  <div class="level">
+    <div class="buttons level-item level-left">
+      <button class="button" title="Start playing" :disabled="playing || store.empty" @click="handlePlay">
                 <span class="icon is-small">
                     <i class="fa-solid fa-play"></i>
                 </span>
-            </button>
+      </button>
 
-            <button class="button" title="Stop playing" :disabled="!playing" @click="handleStop">
+      <button class="button" title="Stop playing" :disabled="!playing" @click="handleStop">
                 <span class="icon is-small">
                     <i class="fa-solid fa-stop"></i>
                 </span>
-            </button>
-        </div>
+      </button>
     </div>
+  </div>
 </template>

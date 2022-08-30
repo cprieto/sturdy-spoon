@@ -3,7 +3,7 @@ import Track from './Track.vue';
 import AddInstrument from './AddInstrument.vue';
 import PlayControls from './PlayControls.vue';
 
-import { useTrackerStore } from "@/stores/Tracker";
+import {useTrackerStore} from "@/stores/Tracker";
 
 const store = useTrackerStore();
 
@@ -11,28 +11,29 @@ const handleAdded = (instrument: { id: string; name: string }) => {
   store.addInstrument(instrument);
 };
 
-const handleSelectedNote = (entry: {position: number, id: string}) => {
-    store.select(entry);
+const handleSelectedNote = (entry: { position: number, id: string }) => {
+  store.select(entry);
 }
 </script>
 
 <template>
   <div class="block box">
     <!-- Play buttons -->
-    <PlayControls />
+    <PlayControls/>
 
     <!-- Start instrument track -->
     <Track
-      v-for="instrument in store.tracks"
-      :key="instrument.id"
-      @selected="handleSelectedNote"
-      :id="instrument.id"
-      :name="instrument.name"
-      :notes="instrument.notes"
-      @removed="store.removeInstrument"
+        v-for="instrument in store.tracks"
+        :key="instrument.id"
+        @selected="handleSelectedNote"
+        :id="instrument.id"
+        :name="instrument.name"
+        :notes="instrument.notes"
+        :playing="store.playing"
+        @removed="store.removeInstrument"
     />
 
     <!-- Add new instrument -->
-    <AddInstrument @added="handleAdded" />
+    <AddInstrument @added="handleAdded"/>
   </div>
 </template>

@@ -1,4 +1,4 @@
-import { Track } from '@/types';
+import {Track} from '@/types';
 import {Sampler, loaded, Part, Transport, Time} from 'tone';
 import urlJoin from 'url-join';
 
@@ -41,7 +41,6 @@ const samples: SampleList = {
         'G4': 'G4.[mp3|ogg]',
         'A2': 'A2.[mp3|ogg]',
         'A3': 'A3.[mp3|ogg]'
-
     },
 
     'cello': {
@@ -79,7 +78,6 @@ const samples: SampleList = {
         'D#3': 'Ds3.[mp3|ogg]',
         'D#4': 'Ds4.[mp3|ogg]',
         'E2': 'E2.[mp3|ogg]'
-
     },
 
     'clarinet': {
@@ -94,7 +92,6 @@ const samples: SampleList = {
         'A#4': 'As4.[mp3|ogg]',
         'A#5': 'As5.[mp3|ogg]',
         'D3': 'D3.[mp3|ogg]'
-
     },
 
     'contrabass': {
@@ -111,7 +108,6 @@ const samples: SampleList = {
         'A2': 'A2.[mp3|ogg]',
         'A#1': 'As1.[mp3|ogg]',
         'B3': 'B3.[mp3|ogg]'
-
     },
 
     'flute': {
@@ -125,7 +121,6 @@ const samples: SampleList = {
         'E6': 'E6.[mp3|ogg]',
         'A4': 'A4.[mp3|ogg]',
         'A5': 'A5.[mp3|ogg]'
-
     },
 
     'french-horn': {
@@ -139,7 +134,6 @@ const samples: SampleList = {
         'A3': 'A3.[mp3|ogg]',
         'C2': 'C2.[mp3|ogg]',
         'C4': 'C4.[mp3|ogg]',
-
     },
 
     'guitar-acoustic': {
@@ -180,7 +174,6 @@ const samples: SampleList = {
         'E4': 'E4.[mp3|ogg]',
         'F2': 'F2.[mp3|ogg]',
         'F3': 'F3.[mp3|ogg]'
-
     },
 
 
@@ -299,7 +292,6 @@ const samples: SampleList = {
         'B5': 'B5.[mp3|ogg]',
         'B6': 'B6.[mp3|ogg]',
         'C3': 'C3.[mp3|ogg]'
-
     },
 
     'organ': {
@@ -446,7 +438,6 @@ const samples: SampleList = {
         'D5': 'D5.[mp3|ogg]',
         'D#3': 'Ds3.[mp3|ogg]',
         'D#4': 'Ds4.[mp3|ogg]'
-
     },
 
     'trombone': {
@@ -467,7 +458,6 @@ const samples: SampleList = {
         'G#3': 'Gs3.[mp3|ogg]',
         'A#1': 'As1.[mp3|ogg]',
         'A#2': 'As2.[mp3|ogg]'
-
     },
 
     'trumpet': {
@@ -482,7 +472,6 @@ const samples: SampleList = {
         'A5': 'A5.[mp3|ogg]',
         'A#4': 'As4.[mp3|ogg]',
         'C4': 'C4.[mp3|ogg]'
-
     },
 
     'tuba': {
@@ -495,7 +484,6 @@ const samples: SampleList = {
         'F2': 'F2.[mp3|ogg]',
         'F3': 'F3.[mp3|ogg]',
         'A#1': 'As1.[mp3|ogg]'
-
     },
 
     'violin': {
@@ -513,7 +501,6 @@ const samples: SampleList = {
         'G4': 'G4.[mp3|ogg]',
         'G5': 'G5.[mp3|ogg]',
         'G6': 'G6.[mp3|ogg]'
-
     },
 
     'xylophone': {
@@ -525,7 +512,6 @@ const samples: SampleList = {
         'C5': 'C5.[mp3|ogg]',
         'C6': 'C6.[mp3|ogg]',
         'C7': 'C7.[mp3|ogg]'
-
     }
 }
 
@@ -543,6 +529,9 @@ const sampleFor = (name: string, url: string = 'samples/') => {
 }
 
 export class AudioPlayer {
+    public onNote?: (position: string) => void;
+    public onFinish?: () => void;
+
     private instruments: Map<string, Sampler>;
 
     constructor(instruments: Array<string>, baseUrl: string = 'samples/') {
@@ -567,6 +556,19 @@ export class AudioPlayer {
             }, track.notes.filter(n => n?.value !== '')).start(0)
         );
 
+        let index = 0;
+        Transport.scheduleRepeat(time => {
+            if (this.onNote) this.onNote(Time(0.75 * index++).toBarsBeatsSixteenths());
+        }, "0:1:2", "0", "6:0:0");
+
+        Transport.scheduleOnce(time => {
+            if (this.onFinish) this.onFinish();
+        }, "6:0:0");
+
         Transport.start();
+    }
+
+    stopComposition() {
+        Transport.stop();
     }
 }
