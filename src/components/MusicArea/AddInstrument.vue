@@ -19,7 +19,7 @@ const handleAdd = () => {
 </script>
 
 <template>
-  <div class="level m-2">
+  <div class="level m-4">
     <div class="field is-grouped level-item level-left">
       <p class="control select">
         <select v-model="selection">

@@ -18,19 +18,19 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="box level has-background-light">
-    <div class="level-item level-left">
+  <div class="box columns has-background-light">
+    <div class="column is-2">
       <p>{{ name }}</p>
     </div>
 
-    <div class="buttons are-small level-item m-0">
+    <div class="buttons are-small column m-0">
       <a v-for="(note, index) in notes" href="#" class="button track-item is-size-7"
          :class="{'is-active': note.time === playing}" :key="index"
          @click="$emit('selected', {position: index, id})">{{ note?.value }}</a>
     </div>
 
     <!-- TODO: Track actions-->
-    <div class="level-item level-right buttons">
+    <div class="column is-1 buttons">
       <button class="button" title="Remove instrument" @click="$emit('removed', id)">
         <span class="icon is-small">
           <i class="fa-solid fa-trash-can"></i>

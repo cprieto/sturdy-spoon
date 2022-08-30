@@ -9,6 +9,7 @@ const playing = ref(false);
 const player: AudioPlayer = inject('player')!;
 
 player.onFinish = () => {
+  player.stopComposition();
   playing.value = false;
   store.playing = null;
 }

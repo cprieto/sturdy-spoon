@@ -34,9 +34,8 @@ const handlePianoKey = async (note: string) => {
   await Tone.start();
 
   trackerStore.setNote(note);
-}
 
-// provide('player', player);
+}
 </script>
 
 <template>

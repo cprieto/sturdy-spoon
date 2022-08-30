@@ -8,10 +8,6 @@ const routes = [
     {path: '/j/:sessionId', name: 'Join', component: Home, props: true},
 ]
 
-// const routes = [
-//     {path: '/', name: 'Home', component: Tone}
-// ];
-
 const router = createRouter({
     history: createWebHistory(),
     routes
