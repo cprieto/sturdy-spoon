@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import Home from '@/views/Home.vue';
 import { nanoid } from 'nanoid';
-import Tone from '@/views/Tone.vue';
 
 const routes = [
     {path: '/', name: 'Home', component: Home, strict: true, props: {sessionId: nanoid()}},
